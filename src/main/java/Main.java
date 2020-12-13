@@ -4,6 +4,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,12 +20,22 @@ public class Main {
         Elements topgameslinks = topgames.getElementsByClass("gameLink");
         Elements topgamesrow = topgames.getElementsByClass("player_count_row");
 
-        String url = topgameslinks.attr("href");
+        //Elements url = topgameslinks.attributes();
+
+
 
         String title = doc.title();
+        String topgamesstr=topgamesrow.text();
+        //usuwanie przerw
+        topgamesstr = topgamesstr.replaceAll("[0-9]","");
+        topgamesstr = topgamesstr.replaceAll("[0-9]","");
+        topgamesstr = topgamesstr.replaceAll(",",";");
+
+        String[] array = topgamesstr.split(";", -1);
+
 
         System.out.println(title);
-        System.out.println(topgamesrow.text()+"\n");
-        System.out.println(url);
+        System.out.println(Arrays.toString(array));
+        //System.out.println(url);
     }
 }
