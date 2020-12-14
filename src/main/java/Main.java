@@ -2,18 +2,26 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
-        Document doc = null;
+    public static void main(String[] args) throws FileNotFoundException {
+    //output jako plik txt
+        PrintStream out = new PrintStream(new FileOutputStream("MostPopularOnSteam.txt"));
+        System.setOut(out);
+
     //połączenie
-        try{doc = Jsoup.connect("https://store.steampowered.com/stats/").get();}
-        catch(IOException e){
-            e.printStackTrace();}
+        Document doc = null;
+        String url="https://store.steampowered.com/stats/";
+        try{doc = Jsoup.connect(url).get();}
+        catch(IOException e){e.printStackTrace();}
     //pobieranie najpopularniejszych gier
         Element topgames = doc.getElementById("detailStats");
         Elements topgamesrow = topgames.getElementsByClass("player_count_row");
@@ -31,9 +39,11 @@ public class Main {
             z2++;}
         Object[] array2 = al.toArray();
 
-
-
-        System.out.println(title);
+    //output
+        System.out.println("-----------------\n"+title);
+        System.out.println(url);
+        System.out.println("-----------------\n100 most popular steam games (last 2 days):");
         System.out.println(list);
+        System.out.println("-----------------\nDawid Wilemski 3P\n-----------------");
     }
 }
