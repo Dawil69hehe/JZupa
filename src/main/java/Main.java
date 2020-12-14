@@ -2,40 +2,38 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Document doc = null;
-
+    //połączenie
         try{doc = Jsoup.connect("https://store.steampowered.com/stats/").get();}
         catch(IOException e){
             e.printStackTrace();}
-
-        Element element1 = doc.getAllElements().first();
+    //pobieranie najpopularniejszych gier
         Element topgames = doc.getElementById("detailStats");
-        Elements topgamestr = topgames.getElementsByTag("tr");
-        Elements topgameslinks = topgames.getElementsByClass("gameLink");
         Elements topgamesrow = topgames.getElementsByClass("player_count_row");
-
-        //Elements url = topgameslinks.attributes();
-
-
-
         String title = doc.title();
         String topgamesstr=topgamesrow.text();
-        //usuwanie przerw
+    //usuwanie przerw i tworzenie listy
         topgamesstr = topgamesstr.replaceAll("[0-9]","");
-        topgamesstr = topgamesstr.replaceAll("[0-9]","");
-        topgamesstr = topgamesstr.replaceAll(",",";");
+        String[] array = topgamesstr.split(",", -1);
+        List<String> al = new ArrayList<String>();
+        List list = new ArrayList(Arrays.asList(array));
+        int z2 = 0;
+        while(z2<101){
+            list.remove(" ");
+            list.remove("");
+            z2++;}
+        Object[] array2 = al.toArray();
 
-        String[] array = topgamesstr.split(";", -1);
 
 
         System.out.println(title);
-        System.out.println(Arrays.toString(array));
-        //System.out.println(url);
+        System.out.println(list);
     }
 }
